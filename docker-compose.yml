@@ -1,0 +1,37 @@
+services:
+  notes.api:
+    image: ${DOCKER_REGISTRY-}notesapi
+    build:
+      context: .
+      dockerfile: Notes.Api/Dockerfile
+
+
+  postgres:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=notesdb
+    volumes:
+      - postgres_data_note:/var/lib/postgresql/data
+
+  keycloak:
+    image: quay.io/keycloak/keycloak
+    hostname: keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command:
+      [
+        'start-dev'
+      ]
+    ports:
+      - 8080:8080
+    volumes:
+      - keycloak_data_note:/opt/keycloak/data/
+
+volumes:
+  keycloak_data_note:
+  postgres_data_note:

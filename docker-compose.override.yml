@@ -1,0 +1,15 @@
+services:
+  notes.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - Keycloak:auth-server-url=http://keycloak:8080/
+      - ConnectionStrings:DefaultConnection=Host=postgres;Database=notesdb;Username=postgres;Password=password;
+
+    ports:
+      - "8080"
+      - "5001:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
