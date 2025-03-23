@@ -39,8 +39,8 @@ namespace Notes.Dal.Repositories
             }
             try
             {
-                _dbContext.Entry(note).State = EntityState.Modified;
-                //_dbContext.Notes.Update(note);
+                //_dbContext.Entry(note).State = EntityState.Modified;
+                var n = _dbContext.Notes.Update(note);
                 await _dbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
